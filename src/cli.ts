@@ -112,7 +112,7 @@ async function main() {
   }
   const ingest = parseEnrichmentIngestConfig(process.env);
   if (!ingest) {
-    throw new Error('Set ENRICHMENT_INGEST_URL and SCRAPE_INGEST_SECRET.');
+    throw new Error('Set ENRICHMENT_INGEST_URL and SCRAPE_COMPLETE_SECRET.');
   }
 
   const rows = await new SupabaseEnrichmentQueue({ config: supabase }).fetchActiveRows();
