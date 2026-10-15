@@ -1,0 +1,33 @@
+{
+  "name": "2nd-vm-enrich-permanent-url",
+  "version": "0.1.0",
+  "private": true,
+  "description": "One-shot Seek job-page enricher: description, contact email, and GCS permanent URL",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\" --max-warnings 0",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "scrape": "tsx src/cli.ts",
+    "build": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^26.2.0",
+    "eslint": "^9.18.0",
+    "tsx": "^4.23.12",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
+    "playwright": "^1.62.1"
+  }
+}

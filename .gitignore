@@ -1,0 +1,8 @@
+node_modules/
+dist/
+output/
+*.csv
+.env
+.DS_Store
+playwright-report/
+test-results/
