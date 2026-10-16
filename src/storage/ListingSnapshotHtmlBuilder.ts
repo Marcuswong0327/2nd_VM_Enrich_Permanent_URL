@@ -13,6 +13,10 @@ function escapeHtml(value: string): string {
 export function buildListingSnapshotHtml(job: EnrichmentJob): string {
   const title = escapeHtml(job.jobTitle || 'Job Listing');
   const company = escapeHtml(job.companyName || '');
+  const state = escapeHtml(job.state || '');
+  const suburbs = escapeHtml(job.suburbs || '');
+  const salary = escapeHtml(job.salary || '');
+  const posted = escapeHtml(job.posted || '');
   const contactEmail = escapeHtml(job.contactEmail || '');
   const originalUrl = escapeHtml(job.seekUrl || '');
   const description = job.descriptionHtml?.trim()
@@ -38,6 +42,10 @@ export function buildListingSnapshotHtml(job: EnrichmentJob): string {
   <h1>${title}</h1>
   <ul class="meta">
     ${company ? `<li><strong>Company:</strong> ${company}</li>` : ''}
+    ${state ? `<li><strong>State:</strong> ${state}</li>` : ''}
+    ${suburbs ? `<li><strong>Suburbs:</strong> ${suburbs}</li>` : ''}
+    ${salary ? `<li><strong>Salary:</strong> ${salary}</li>` : ''}
+    ${posted ? `<li><strong>Posted:</strong> ${posted}</li>` : ''}
     ${contactEmail ? `<li><strong>Email:</strong> ${contactEmail}</li>` : ''}
     ${originalUrl ? `<li><strong>Original URL:</strong> <a href="${originalUrl}">${originalUrl}</a></li>` : ''}
   </ul>

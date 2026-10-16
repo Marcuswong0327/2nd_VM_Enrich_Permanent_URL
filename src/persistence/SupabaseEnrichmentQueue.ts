@@ -8,12 +8,20 @@ export type EnrichmentQueueRow = {
   url: string;
   researchId: string;
   companyName: string;
+  state: string;
+  suburbs: string;
+  salary: string;
+  posted: string;
 };
 
 type EnrichmentQueueDbRow = {
   url?: string | null;
   research_id?: string | null;
   company_name?: string | null;
+  state?: string | null;
+  suburbs?: string | null;
+  salary?: string | null;
+  posted?: string | null;
 };
 
 export type SupabaseEnrichmentQueueOptions = {
@@ -54,7 +62,7 @@ export class SupabaseEnrichmentQueue {
     const found: EnrichmentQueueRow[] = [];
     let offset = 0;
     const query =
-      'select=url,research_id,company_name&is_active=eq.true&order=research_id.asc';
+      'select=url,research_id,company_name,state,suburbs,salary,posted&is_active=eq.true&order=research_id.asc';
 
     for (;;) {
       const response = await this.fetchImpl(`${this.endpoint}?${query}`, {
@@ -84,6 +92,10 @@ export class SupabaseEnrichmentQueue {
             url: row.url.trim(),
             researchId: row.research_id.trim(),
             companyName: row.company_name?.trim() ?? '',
+            state: row.state?.trim() ?? '',
+            suburbs: row.suburbs?.trim() ?? '',
+            salary: row.salary?.trim() ?? '',
+            posted: row.posted?.trim() ?? '',
           }))
       );
 

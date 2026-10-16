@@ -7,6 +7,10 @@ function job(overrides: Partial<EnrichmentJob> = {}): EnrichmentJob {
     researchId: 'jr1',
     seekUrl: 'https://www.au.seek.com/job/91086625',
     companyName: 'William Adams Pty Ltd',
+    state: 'Melbourne (VIC)',
+    suburbs: 'Dandenong',
+    salary: '$90k',
+    posted: '2026-08-08',
     jobTitle: 'Plant Mechanic',
     descriptionHtml: '',
     contactEmail: '',
@@ -40,6 +44,7 @@ describe('GcsPermanentUrlAttacher', () => {
     expect(body.markdownContent).toContain('Plant Mechanic');
     expect(body.markdownContent).toContain('https://www.au.seek.com/job/91086625');
     expect(body.markdownContent).toContain('William Adams Pty Ltd');
+    expect(body.markdownContent).toContain('$90k');
   });
 
   it('includes the full job description in the uploaded snapshot', async () => {

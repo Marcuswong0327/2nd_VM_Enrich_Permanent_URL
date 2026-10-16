@@ -31,7 +31,7 @@ function queue(fetchImpl: typeof fetch) {
 }
 
 describe('SupabaseEnrichmentQueue', () => {
-  it('reads url, research_id, and company_name where is_active is true', async () => {
+  it('reads url, research_id, company_name, and card fields where is_active is true', async () => {
     const { requests, fetchImpl } = fakeSupabase([
       {
         body: [
@@ -39,11 +39,19 @@ describe('SupabaseEnrichmentQueue', () => {
             url: 'https://au.seek.com/job/123',
             research_id: 'jr1',
             company_name: 'Huon',
+            state: 'Sydney (NSW)',
+            suburbs: 'Silverwater',
+            salary: '$90k',
+            posted: '2026-08-12',
           },
           {
             url: 'https://au.seek.com/job/456',
             research_id: 'jr2',
             company_name: '  ',
+            state: '  ',
+            suburbs: null,
+            salary: '',
+            posted: null,
           },
         ],
       },
@@ -56,16 +64,24 @@ describe('SupabaseEnrichmentQueue', () => {
         url: 'https://au.seek.com/job/123',
         researchId: 'jr1',
         companyName: 'Huon',
+        state: 'Sydney (NSW)',
+        suburbs: 'Silverwater',
+        salary: '$90k',
+        posted: '2026-08-12',
       },
       {
         url: 'https://au.seek.com/job/456',
         researchId: 'jr2',
         companyName: '',
+        state: '',
+        suburbs: '',
+        salary: '',
+        posted: '',
       },
     ]);
     expect(requests[0].url).toBe(
       'https://abcd1234.supabase.co/rest/v1/seek_job_enrichment_urls' +
-        '?select=url,research_id,company_name&is_active=eq.true&order=research_id.asc'
+        '?select=url,research_id,company_name,state,suburbs,salary,posted&is_active=eq.true&order=research_id.asc'
     );
     expect(requests[0].method).toBe('GET');
     expect(requests[0].headers.apikey).toBe('service-key');
@@ -86,7 +102,15 @@ describe('SupabaseEnrichmentQueue', () => {
 
     const rows = await queue(fetchImpl).fetchActiveRows();
     expect(rows).toEqual([
-      { url: 'https://au.seek.com/job/1', researchId: 'jr1', companyName: 'A' },
+      {
+        url: 'https://au.seek.com/job/1',
+        researchId: 'jr1',
+        companyName: 'A',
+        state: '',
+        suburbs: '',
+        salary: '',
+        posted: '',
+      },
     ]);
   });
 
